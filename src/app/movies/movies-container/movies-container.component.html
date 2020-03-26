@@ -3,14 +3,8 @@
         <div class="col-4">
             <table class="table table-sm table-hover">
                 <tbody>
-                    <tr>
-                        <td>Movie 1</td>
-                    </tr>
-                    <tr>
-                        <td>Movie 2</td>
-                    </tr>
-                    <tr>
-                        <td>Movie 3</td>
+                    <tr *ngFor="let movie of movies; trackBy: trackByMovies">
+                        <td>{{ movie?.title }}</td>
                     </tr>
                 </tbody>
             </table>
