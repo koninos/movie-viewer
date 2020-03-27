@@ -4,16 +4,19 @@ import { NgModule } from '@angular/core';
 import { MoviesContainerComponent } from './movies-container/movies-container.component';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { MoviesService } from './movies.service';
-
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    MoviesContainerComponent
+    MoviesContainerComponent,
+    MovieDetailsComponent
   ],
   imports: [
     CommonModule,
     MoviesRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     MoviesService

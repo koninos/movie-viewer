@@ -1,0 +1,24 @@
+<div class="card" *ngIf="movie">
+    <div class="card-header">
+        {{ movie?.title }}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <img class="img-fluid" [src]="movie.poster_path" alt="Movie poster">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ngb-rating [rate]="movie.vote_average" [readonly]="true"></ngb-rating>
+                        <hr>
+                        <span ngbTooltip="based on {{ movie.vote_count }} user ratings">
+                            Rating: <b>{{ movie.vote_average }}</b>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <p>{{ movie?.overview }}</p>
+            </div>
+        </div>
+    </div>
+</div>

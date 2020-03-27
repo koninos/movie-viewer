@@ -1,16 +1,18 @@
-<div class="container">
+<div class="container" *ngIf="movies">
     <div class="row">
         <div class="col-4">
             <table class="table table-sm table-hover">
                 <tbody>
-                    <tr *ngFor="let movie of movies; trackBy: trackByMovies">
+                    <tr *ngFor="let movie of movies; trackBy: trackByMovies" (click)="selectMovie(movie)"
+                        [class.selected]="movie === selectedMovie">
+
                         <td>{{ movie?.title }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-8">
-            Details
+            <app-movie-details [movie]="selectedMovie"></app-movie-details>
         </div>
     </div>
 </div>
