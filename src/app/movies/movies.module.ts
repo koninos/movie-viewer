@@ -19,7 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   providers: [
-    MoviesService
+    MoviesService,
+    { provide: 'API_KEY', useValue: '9198fa6d9a9713bc6b03ee9582525917' }
   ]
 })
 export class MoviesModule { }

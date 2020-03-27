@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from "rxjs/operators";
@@ -10,10 +10,12 @@ import { environment } from '../../environments/environment';
 export class MoviesService {
 
   readonly API_URL: string = environment.baseUrl;
-  readonly API_KEY: string = '9198fa6d9a9713bc6b03ee9582525917';
   readonly API_POSTER_URL: string = environment.apiPosterUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject('API_KEY') private API_KEY,
+    private http: HttpClient
+  ) {}
 
   public getMovies(): Observable<IMoviesResult> {
     return this.http.get<IMoviesResult>(this.getPopularMoviesURI())
