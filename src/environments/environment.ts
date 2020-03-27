@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'http://www.mocky.io/v2/5e7df064300000da134af7f2',
+  apiPosterUrl: 'https://image.tmdb.org/t/p/'
+
 };
 
 /*
