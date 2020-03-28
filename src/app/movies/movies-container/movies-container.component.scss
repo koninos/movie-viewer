@@ -28,3 +28,25 @@ tr {
         margin-top: 120px;
     }
 }
+
+.pagination {
+    display: inline-block;
+
+    a {
+        cursor: pointer;
+
+        &.isDisabled {
+            color: currentColor;
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: none;
+        }
+    }
+
+    a, span {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+}

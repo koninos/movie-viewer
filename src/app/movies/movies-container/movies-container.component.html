@@ -10,6 +10,22 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="row justify-content-center">
+                <div class="pagination justify-content-center">
+                    <a [ngClass]="{'isDisabled': 1 === currentPage }" ngbTooltip="Previous page" placement="bottom"
+                        (click)="getPopularMovies(currentPage - 1)">
+
+                        <fa-icon [icon]="faArrowLeft"></fa-icon>
+                    </a>
+                    <span>Page {{ currentPage }}</span>
+                    <a [ngClass]="{'isDisabled': totalPages <= currentPage }" ngbTooltip="Next page" placement="bottom"
+                        (click)="getPopularMovies(currentPage + 1)">
+
+                        <fa-icon [icon]="faArrowRight"></fa-icon>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-8">
             <app-movie-search (movieSelected)="movieSelectedOnSearch($event)"></app-movie-search>

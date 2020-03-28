@@ -26,8 +26,8 @@ export class MoviesService {
     this.selectedMovie$.next(movie);
   }
 
-  public getPopularMovies(): Observable<IMoviesResult> {
-    return this.http.get<IMoviesResult>(this.getPopularMoviesURI())
+  public getPopularMovies(page: number = 1): Observable<IMoviesResult> {
+    return this.http.get<IMoviesResult>(`${this.getPopularMoviesURI()}&page=${page}`)
       .pipe(
         catchError(this.handleError('fetch movies'))
       );
@@ -54,7 +54,7 @@ export class MoviesService {
       return environment.apiDiscoverBaseUrl;
     }
 
-    const params = `?api_key=${this.API_KEY}&sort_by=popularity.desc&page=1`;
+    const params = `?api_key=${this.API_KEY}&sort_by=popularity.desc`;
     return `${environment.apiDiscoverBaseUrl}/movie${params}`;
   }
 

@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { IMovie, IMovieDetails, MovieDetails } from '../movies.inteface';
 import { MoviesService } from '../movies.service';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movies-container',
@@ -13,6 +14,10 @@ export class MoviesContainerComponent implements OnInit, OnDestroy {
 
   public movies: IMovie[];
   public selectedMovie: IMovieDetails;
+  public currentPage: number;
+  public totalPages: number = 1;
+  public faArrowLeft = faArrowLeft;
+  public faArrowRight = faArrowRight;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -27,13 +32,8 @@ export class MoviesContainerComponent implements OnInit, OnDestroy {
         this.selectedMovie = this.getMovieDetails(movie);
       })
 
-    this.moviesService.getPopularMovies()
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(res => {
-        this.movies = res.results;
-      })
+    // Get the first page from movies results
+    this.getPopularMovies(1);
   }
 
   ngOnDestroy() {
@@ -51,6 +51,20 @@ export class MoviesContainerComponent implements OnInit, OnDestroy {
 
   public movieSelectedOnSearch(movie: IMovie) {
     this.selectMovie(movie);
+  }
+
+  public getPopularMovies(page: number = 1): void {
+    if (page > 0 && page <= this.totalPages) {
+      this.moviesService.getPopularMovies(page)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(res => {
+        this.movies = res.results;
+        this.currentPage = res.page;
+        this.totalPages = res.total_pages;
+      })
+    }
   }
 
   private getMovieDetails(movie: IMovie): IMovieDetails {
