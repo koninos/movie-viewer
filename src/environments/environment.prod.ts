@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.themoviedb.org/3/discover/movie',
+  apiDiscoverBaseUrl: 'https://api.themoviedb.org/3/discover',
+  apiSearchBaseUrl: 'https://api.themoviedb.org/3/search',
   apiPosterUrl: 'https://image.tmdb.org/t/p/'
 };

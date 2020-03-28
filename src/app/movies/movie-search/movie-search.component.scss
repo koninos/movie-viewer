@@ -1,0 +1,19 @@
+@import "../../../variables.scss";
+
+input {
+    margin-bottom: 10px;
+}
+
+tr {
+    cursor: pointer;
+
+    :hover {
+        background-color: $hover-color;
+    }
+}
+
+tbody {
+    position: absolute;
+    z-index: 1;
+    background: #eaecea;
+}

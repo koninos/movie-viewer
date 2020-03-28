@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://www.mocky.io/v2/5e7df064300000da134af7f2',
+  apiDiscoverBaseUrl: 'http://www.mocky.io/v2/5e7df064300000da134af7f2',
+  apiSearchBaseUrl: 'https://api.themoviedb.org/3/search',
   apiPosterUrl: 'https://image.tmdb.org/t/p/'
 
 };

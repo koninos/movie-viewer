@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
-import { IMovie, MovieDetails, IMovieDetails } from '../movies.inteface';
+import { IMovie, IMovieDetails, MovieDetails } from '../movies.inteface';
 import { MoviesService } from '../movies.service';
 
 @Component({
@@ -19,7 +19,15 @@ export class MoviesContainerComponent implements OnInit, OnDestroy {
   constructor(private moviesService: MoviesService) { }
 
   ngOnInit(): void {
-    this.moviesService.getMovies()
+    this.moviesService.getSelectedMovie()
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((movie: IMovie) => {
+        this.selectedMovie = this.getMovieDetails(movie);
+      })
+
+    this.moviesService.getPopularMovies()
       .pipe(
         takeUntil(this.unsubscribe$)
       )
@@ -38,9 +46,20 @@ export class MoviesContainerComponent implements OnInit, OnDestroy {
   }
 
   public selectMovie(movie: IMovie): void {
-    const m = new MovieDetails(movie);
-    m.poster_path = this.moviesService.getPosterUrl(movie.poster_path);
+    this.moviesService.setSelectedMovie(movie);
+  }
 
-    this.selectedMovie = m;
+  public movieSelectedOnSearch(movie: IMovie) {
+    this.selectMovie(movie);
+  }
+
+  private getMovieDetails(movie: IMovie): IMovieDetails {
+    let m = null;
+
+    if (movie) {
+      m = new MovieDetails(movie);
+      m.poster_path = this.moviesService.getPosterUrl(movie.poster_path);
+    }
+    return m;
   }
 }

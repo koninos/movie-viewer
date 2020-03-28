@@ -1,15 +1,16 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from "rxjs/operators";
-import { IMoviesResult } from './movies.inteface';
-import { PosterSize } from './movies.enum';
 import { environment } from '../../environments/environment';
+import { PosterSize } from './movies.enum';
+import { IMovie, IMoviesResult } from './movies.inteface';
 
 @Injectable()
 export class MoviesService {
 
-  readonly API_URL: string = environment.baseUrl;
+  private selectedMovie$ = new BehaviorSubject<IMovie>(null);
+
   readonly API_POSTER_URL: string = environment.apiPosterUrl;
 
   constructor(
@@ -17,10 +18,25 @@ export class MoviesService {
     private http: HttpClient
   ) {}
 
-  public getMovies(): Observable<IMoviesResult> {
+  public getSelectedMovie(): BehaviorSubject<IMovie> {
+    return this.selectedMovie$;
+  }
+
+  public setSelectedMovie(movie: IMovie) {
+    this.selectedMovie$.next(movie);
+  }
+
+  public getPopularMovies(): Observable<IMoviesResult> {
     return this.http.get<IMoviesResult>(this.getPopularMoviesURI())
       .pipe(
-        catchError(this.handleError('fetchMovies'))
+        catchError(this.handleError('fetch movies'))
+      );
+  }
+
+  public searchMovies(query: string): Observable<IMoviesResult> {
+    return this.http.get<IMoviesResult>(this.getSearchMovieURI(query))
+      .pipe(
+        catchError(this.handleError('find movies'))
       );
   }
 
@@ -28,14 +44,18 @@ export class MoviesService {
     return `${this.API_POSTER_URL}${posterSize}${posterPath}`;
   }
 
-  private getPopularMoviesURI(): string {
-    let params = '';
+  public getSearchMovieURI(query: string): string {
+    const params = `?api_key=${this.API_KEY}&query=${query}`;
+    return `${environment.apiSearchBaseUrl}/movie${params}`;
+  }
 
-    if (environment.production) {
-      params = `?api_key=${this.API_KEY}&sort_by=popularity.desc&page=1`;
+  private getPopularMoviesURI(): string {
+    if (!environment.production) {
+      return environment.apiDiscoverBaseUrl;
     }
 
-    return `${this.API_URL}${params}`;
+    const params = `?api_key=${this.API_KEY}&sort_by=popularity.desc&page=1`;
+    return `${environment.apiDiscoverBaseUrl}/movie${params}`;
   }
 
   private handleError(operation: string) {

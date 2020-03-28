@@ -1,0 +1,13 @@
+<input #searchBox type="text" class="form-control"
+    placeholder="Search for a movie"
+    (input)="search(searchBox.value)" />
+
+<table *ngIf="doShowSearchList" class="table table-sm table-hover">
+    <tbody>
+        <tr *ngFor="let movie of (moviesResult$ | async)?.results; trackBy: trackBySearchMovies"
+            (click)="selectMovie(movie)">
+
+            <td>{{ movie?.title }}</td>
+        </tr>
+    </tbody>
+</table>
