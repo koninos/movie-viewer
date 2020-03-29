@@ -1,5 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MoviesService } from '../movies.service';
 import { MovieSearchComponent } from './movie-search.component';
 
 describe('MovieSearchComponent', () => {
@@ -8,7 +9,14 @@ describe('MovieSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MovieSearchComponent ]
+        imports: [
+            HttpClientModule
+        ],
+        declarations: [ MovieSearchComponent ],
+        providers: [
+            MoviesService,
+            { provide: 'API_KEY', useValue: '9198fa6d9a9713bc6b03ee9582525917' }
+        ]
     })
     .compileComponents();
   }));

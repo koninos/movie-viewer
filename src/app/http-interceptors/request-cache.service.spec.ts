@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-
 import { RequestCacheService } from './request-cache.service';
 
 describe('RequestCacheService', () => {
   let service: RequestCacheService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+        providers: [
+            RequestCacheService
+        ]
+      });
+
     service = TestBed.inject(RequestCacheService);
   });
 
