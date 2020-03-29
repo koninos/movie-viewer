@@ -1,4 +1,5 @@
 # MovieViewer
+Discover the most popular movies or directly search for your favorite ones, with Movie Viewer. Check [live demo page](https://practical-hermann-32ddcf.netlify.com/).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 
